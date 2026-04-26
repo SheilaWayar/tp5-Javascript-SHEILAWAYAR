@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>TP5 - API Demo</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: #1a1a2e; 
+            color: white;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { text-align: center; margin-bottom: 20px; color: #f39c12; }
+        .controles { text-align: center; margin-bottom: 30px; }
+        button { 
+            padding: 12px 24px; 
+            background: #e74c3c; 
+            color: white; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        button:hover { background: #c0392b; }
+        button:disabled { background: #555; cursor: not-allowed; }
+        
+        /* (d) Estado de Cargando */
+        #estado { 
+            text-align: center; 
+            font-size: 18px; 
+            margin: 20px 0; 
+            min-height: 30px;
+        }
+        .cargando { color: #f39c12; }
+        .error { 
+            color: #e74c3c; 
+            background: rgba(231, 76, 60, 0.1); 
+            padding: 15px; 
+            border-radius: 6px; 
+            border: 1px solid #e74c3c;
+        }
+        
+        /* (e) Tarjetas con .map() */
+        #contenedor-pokemon { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        .tarjeta-pokemon { 
+            background: #16213e; 
+            padding: 20px; 
+            border-radius: 12px; 
+            text-align: center;
+            border: 2px solid #0f3460;
+            transition: transform 0.2s;
+        }
+        .tarjeta-pokemon:hover { transform: translateY(-5px); }
+        .tarjeta-pokemon img { width: 120px; height: 120px; }
+        .tarjeta-pokemon h3 { margin: 10px 0; text-transform: capitalize; color: #f39c12; }
+        .tipos { display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; }
+        .tipo { 
+            padding: 4px 12px; 
+            border-radius: 20px; 
+            font-size: 12px; 
+            background: #0f3460;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PokéAPI Demo - TP5</h1>
+        
+        <div class="controles">
+            <button id="btn-cargar">Cargar 12 Pokémon Aleatorios</button>
+        </div>
+
+        <!-- (d) Estado de Cargando + (f) Error -->
+        <div id="estado"></div>
+        
+        <!-- (e) Acá se renderizan las tarjetas -->
+        <div id="contenedor-pokemon"></div>
+    </div>
+
+    <script src="js/api.js"></script>
+</body>
+</html>
