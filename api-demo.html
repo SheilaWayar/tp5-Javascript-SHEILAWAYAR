@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>TP5 - API Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéAPI Demo</title>
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
@@ -10,18 +11,14 @@
         <h1>PokéAPI Demo - TP5</h1>
         
         <div class="controles">
-            <input type="text" id="input-busqueda" placeholder="Buscá un pokémon... mínimo 3 letras"
-            style="padding: 12px; width: 300px; border-radius: 6px; border: 1px solid #0f3460; background: #16213e; color:  white; margin-right: 10px;> ";"
+            <input type="text" id="buscador" placeholder="Buscá un pokémon... mínimo 3 letras">
             <button id="btn-cargar">Cargar 12 Pokémon Aleatorios</button>
         </div>
-
-        <!-- (d) Estado de Cargando + (f) Error -->
-        <div id="estado"></div>
         
-        <!-- (e) Acá se renderizan las tarjetas -->
+        <div id="estado"></div>
         <div id="contenedor-pokemon"></div>
     </div>
-
+    
     <script src="js/api.js"></script>
 </body>
 </html>
