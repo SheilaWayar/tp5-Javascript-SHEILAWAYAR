@@ -1,0 +1,224 @@
+/* (a) Variables CSS con paleta coherente usando tu #B05994 */
+:root {
+    --color-primario: #B05994;
+    --color-primario-hover: #c76ba8;
+    --color-primario-claro: #d47bb0;
+    --fondo-oscuro: #2a1b2d;
+    --fondo-tarjeta: #3d2840;
+    --fondo-input: #3d2840;
+    --texto-claro: #fce4f0;
+    --texto-secundario: #b88ba5;
+    --color-error: #ff6b9d;
+    --color-error-fondo: rgba(255, 107, 157, 0.1);
+    --color-exito: #4caf50;
+    --sombra: 0 4px 12px rgba(176, 89, 148, 0.2);
+    --sombra-hover: 0 8px 20px rgba(176, 89, 148, 0.3);
+    --radio-borde: 12px;
+    --transicion: all 0.3s ease;
+}
+
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
+
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background: var(--fondo-oscuro); 
+    color: var(--texto-claro);
+    padding: 20px;
+    line-height: 1.6;
+}
+
+/* (b) Layout responsive con Flexbox y Grid */
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
+
+h1 { 
+    text-align: center; 
+    margin-bottom: 30px; 
+    color: var(--color-primario);
+    font-size: 2rem;
+}
+
+/* Controles generales */
+.controles { 
+    display: flex; 
+    gap: 15px; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    margin-bottom: 30px;
+}
+
+/* (e) Input de búsqueda estilizado con :focus visible */
+input[type="text"], 
+input[type="number"],
+select {
+    padding: 12px 16px; 
+    border-radius: 6px; 
+    border: 2px solid var(--color-primario); 
+    background: var(--fondo-input); 
+    color: var(--texto-claro); 
+    font-size: 16px;
+    transition: var(--transicion);
+    width: 100%;
+    max-width: 300px;
+}
+
+input:focus,
+select:focus { 
+    outline: none; 
+    border-color: var(--color-primario-claro); 
+    box-shadow: 0 0 8px rgba(176, 89, 148, 0.5);
+}
+
+input::placeholder { color: var(--texto-secundario); }
+
+button { 
+    padding: 12px 24px; 
+    background: var(--color-primario);
+    color: white; 
+    border: none; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-size: 16px;
+    font-weight: bold;
+    transition: var(--transicion);
+}
+
+button:hover { 
+    background: var(--color-primario-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--sombra);
+}
+
+button:disabled { 
+    background: #5a3a5f; 
+    cursor: not-allowed; 
+    transform: none;
+    opacity: 0.6;
+}
+
+/* (d) Estados visuales */
+#estado { 
+    text-align: center; 
+    font-size: 18px; 
+    margin: 20px 0; 
+    min-height: 30px;
+    font-weight: 500;
+}
+
+.cargando { 
+    color: var(--color-primario-claro);
+    animation: pulse 1.5s ease-in-out infinite; /* Texto pulsante */
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.error { 
+    color: var(--color-error); 
+    background: var(--color-error-fondo); 
+    padding: 15px; 
+    border-radius: 6px; 
+    border: 1px solid var(--color-error); /* fondo rojo claro, borde rojo */
+}
+
+/* Estado vacío - mensaje centrado con ícono */
+.vacio {
+    text-align: center;
+    padding: 40px;
+    color: var(--texto-secundario);
+}
+
+.vacio::before {
+    content: '🔍';
+    display: block;
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+/* (c) Tarjetas con sombras, border-radius y hover effect */
+#contenedor-pokemon,
+#contenedor-productos,
+#lista-tareas { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+    gap: 20px; 
+}
+
+.tarjeta-pokemon,
+.tarjeta-producto,
+li { 
+    background: var(--fondo-tarjeta);
+    padding: 20px; 
+    border-radius: var(--radio-borde); 
+    border: 2px solid var(--color-primario);
+    box-shadow: var(--sombra);
+    transition: var(--transicion);
+}
+
+.tarjeta-pokemon:hover,
+.tarjeta-producto:hover,
+li:hover { 
+    transform: translateY(-5px); 
+    box-shadow: var(--sombra-hover);
+    border-color: var(--color-primario-claro);
+}
+
+.tarjeta-pokemon img,
+.tarjeta-producto img { 
+    width: 100%; 
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.tarjeta-pokemon h3,
+.tarjeta-producto h3 { 
+    margin: 10px 0; 
+    text-transform: capitalize; 
+    color: var(--color-primario);
+}
+
+/* Para la To-Do App */
+#lista-tareas {
+    display: block;
+}
+
+#lista-tareas li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.completada { 
+    text-decoration: line-through; 
+    opacity: 0.6;
+}
+
+.btn-eliminar {
+    background: var(--color-error);
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+.btn-eliminar:hover {
+    background: #e91e63;
+}
+
+/* (b) Responsive */
+@media (max-width: 768px) {
+    h1 { font-size: 1.5rem; }
+    .controles { flex-direction: column; align-items: center; }
+    input, button { max-width: 100%; }
+    #contenedor-pokemon,
+    #contenedor-productos { grid-template-columns: 1fr; }
+}
