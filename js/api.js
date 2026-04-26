@@ -1,61 +1,70 @@
-const btnCargar = document.getElementById('btn-cargar');
-const contenedor = document.getElementById('contenedor-pokemon');
-const estado = document.getElementById('estado');
-const buscador = document.getElementById('buscador');
+window.pokemons = [];
 
-let todosLosPokemons = []; // Acá guardamos los 12 para filtrar
-
-btnCargar.addEventListener('click', async () => {
+document.getElementById('btn-cargar').onclick = async () => {
+  const estado = document.getElementById('estado');
+  const grid = document.getElementById('contenedor-pokemon');
+  
   estado.textContent = 'Cargando...';
-  contenedor.innerHTML = '';
-  buscador.value = ''; // Limpia el buscador
+  estado.className = 'cargando';
+  grid.innerHTML = '';
+  
+  const ids = [];
+  while(ids.length < 12){
+    const n = Math.floor(Math.random() * 898) + 1;
+    if(!ids.includes(n)) ids.push(n);
+  }
   
   try {
-    const ids = [];
-    while (ids.length < 12) {
-      const id = Math.floor(Math.random() * 898) + 1;
-      if (!ids.includes(id)) ids.push(id);
-    }
-
-    const promesas = ids.map(id => 
-      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(res => res.json())
+    const data = await Promise.all(
+      ids.map(id => fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(r => r.json()))
     );
     
-    const resultados = await Promise.all(promesas);
-    todosLosPokemons = resultados; // Guardamos para el filtro
-    
-    renderizarPokemons(todosLosPokemons);
-    estado.textContent = `Se cargaron ${todosLosPokemons.length} Pokémon`;
-    
-  } catch (error) {
-    estado.textContent = 'Error al cargar. Intentá de nuevo.';
-    console.error(error);
+    window.pokemons = data;
+    render(window.pokemons);
+    estado.textContent = `Se cargaron ${data.length} Pokémon`;
+    estado.className = '';
+  } catch(err) {
+    estado.textContent = 'Error al cargar';
+    estado.className = 'error';
   }
-});
+};
 
-// ESTA ES LA PARTE DEL BUSCADOR QUE TE FALTA
-buscador.addEventListener('input', () => {
-  const texto = buscador.value.toLowerCase();
-  
-  if (todosLosPokemons.length === 0) return; // Si no hay pokémon, no hace nada
-  
-  const filtrados = todosLosPokemons.filter(pokemon => 
-    pokemon.name.toLowerCase().includes(texto)
+document.getElementById('buscador').oninput = (e) => {
+  const texto = e.target.value.toLowerCase();
+  const filtrados = window.pokemons.filter(p => 
+    p.name.toLowerCase().includes(texto)
   );
   
-  renderizarPokemons(filtrados);
+  render(filtrados);
   
-  if (filtrados.length === 0 && texto.length > 0) {
-    contenedor.innerHTML = '<p>No se encontraron resultados</p>';
+  if(filtrados.length === 0 && texto) {
+    document.getElementById('contenedor-pokemon').innerHTML = 
+      '<div class="vacio">No se encontraron resultados</div>';
   }
-});
-
-function renderizarPokemons(lista) {
-  contenedor.innerHTML = lista.map(pokemon => `
-    <div class="pokemon-card">
-      <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
-      <h3>${pokemon.name}</h3>
-      <p>#${pokemon.id}</p>
-    </div>
-  `).join('');
+};
+function render(lista) {
+  document.getElementById('contenedor-pokemon').innerHTML = 
+    lista.map(p => `
+      <div style="
+        background: #3d2840; 
+        padding: 20px; 
+        border-radius: 12px; 
+        border: 2px solid #B05994; 
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(176, 89, 148, 0.2);
+        margin: 10px;
+      ">
+        <img src="${p.sprites.front_default}" alt="${p.name}" style="width:100px; height:100px;">
+        <h3 style="color: #B05994; text-transform: capitalize; margin: 10px 0; font-family: Arial;">${p.name}</h3>
+        <p style="color: #fce4f0; margin: 5px 0;">#${p.id}</p>
+      </div>
+    `).join('');
+    
+  // Esto fuerza el grid en el contenedor
+  document.getElementById('contenedor-pokemon').style.cssText = `
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+    gap: 20px;
+    margin-top: 30px;
+  `;
 }
