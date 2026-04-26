@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>TP5 - To-Do App</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: #f0f2f5; 
+            display: flex; 
+            justify-content: center; 
+            padding: 40px 20px;
+        }
+        .container { 
+            background: white; 
+            width: 100%; 
+            max-width: 500px; 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 { color: #1c1e21; margin-bottom: 20px; text-align: center; }
+        form { display: flex; gap: 10px; margin-bottom: 20px; }
+        #input-tarea { 
+            flex: 1; 
+            padding: 12px; 
+            border: 1px solid #ddd; 
+            border-radius: 6px; 
+            font-size: 16px;
+        }
+        #input-tarea:focus { outline: none; border-color: #1877f2; }
+        button { 
+            padding: 12px 20px; 
+            background: #1877f2; 
+            color: white; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        button:hover { background: #166fe5; }
+        #contador { 
+            margin-bottom: 15px; 
+            color: #65676b; 
+            font-size: 14px;
+        }
+        ul { list-style: none; }
+        li { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 12px; 
+            background: #f7f8fa; 
+            margin-bottom: 8px; 
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        li:hover { background: #e9ebee; }
+        .texto-tarea { 
+            flex: 1; 
+            cursor: pointer; 
+            transition: all 0.3s;
+        }
+        /* (b) Clase para tachado */
+        .completada { 
+            text-decoration: line-through; 
+            color: #8a8d91; 
+            opacity: 0.6;
+        }
+        .btn-eliminar { 
+            background: #e41e3f; 
+            padding: 6px 12px; 
+            font-size: 12px;
+        }
+        .btn-eliminar:hover { background: #c41a37; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mi Lista de Tareas</h1>
+        
+        <!-- (a) Formulario con input + botón -->
+        <form id="form-tarea">
+            <input type="text" id="input-tarea" placeholder="Escribí una tarea..." autocomplete="off">
+            <button type="submit">Agregar</button>
+        </form>
+
+        <!-- (d) Contador de tareas pendientes -->
+        <div id="contador">Tareas pendientes: 0</div>
+        
+        <ul id="lista-tareas"></ul>
+    </div>
+
+    <script src="js/todo.js"></script>
+</body>
+</html>
