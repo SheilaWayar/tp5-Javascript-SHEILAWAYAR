@@ -30,3 +30,16 @@ Paleta coherente basada en `#B05994`. CSS compartido en `css/app.css` con variab
 1. Clonar el repositorio:
 ```bash
 git clone https://github.com/SheilaWayar/tp5-Javascript-SHEILAWAYAR.git
+### Capturas de pantalla
+** 0. carga Inicio 
+![inicio](01-Inicio.png)
+**1. Estado de cargado
+![Cargando](02-Cargando.png)
+**2. Carga inicial de 12 Pokémon**
+![Grid completo](03-Cargandos.png)
+
+**3. Búsqueda con filter()**
+![Filtro funcionando](04-filtrado.png)
+
+**4. Estado vacío**
+![Sin resultados](05-estadpvacio.png)
