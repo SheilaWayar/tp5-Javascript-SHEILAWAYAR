@@ -1,6 +1,7 @@
 const btnCargar = document.getElementById('btn-cargar');
 const estado = document.getElementById('estado');
 const contenedor = document.getElementById('contenedor-pokemon');
+const buscador = document.getElementById('buscador');
 
 const renderizarPokemon = (listaPokemon) => {
     if (listaPokemon.length === 0) {
@@ -24,8 +25,30 @@ const renderizarPokemon = (listaPokemon) => {
     estado.className = '';
 };
 
-// (a) Función async que hace fetch a la API
 const obtenerPokemon = async () => {
-    // (d) Mostrar "Cargando..." mientras espera
     estado.textContent = 'Cargando Pokémon...';
-    estado.className = ''}
+    estado.className = '';
+    btnCargar.disabled = true;
+    
+    try {
+        const ids = Array.from({length: 12}, () => Math.floor(Math.random() * 151) + 1);
+        const promesas = ids.map(id => 
+            fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(res => res.json())
+        );
+        const datos = await Promise.all(promesas);
+        
+        renderizarPokemon(datos);
+        
+    } catch (error) {
+        estado.textContent = 'Error al cargar Pokémon. Revisá tu conexión.';
+        estado.className = 'error';
+        console.error(error);
+    } finally {
+        btnCargar.disabled = false;
+    }
+};
+
+// ESTA LÍNEA TE FALTABA - conecta el botón
+btnCargar.addEventListener('click', obtenerPokemon);
+
+console.log("JS cargado correctamente");
