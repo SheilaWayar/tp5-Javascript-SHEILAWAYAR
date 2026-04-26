@@ -1,54 +1,61 @@
 const btnCargar = document.getElementById('btn-cargar');
-const estado = document.getElementById('estado');
 const contenedor = document.getElementById('contenedor-pokemon');
+const estado = document.getElementById('estado');
 const buscador = document.getElementById('buscador');
 
-const renderizarPokemon = (listaPokemon) => {
-    if (listaPokemon.length === 0) {
-        contenedor.innerHTML = '';
-        estado.textContent = 'No se encontraron resultados';
-        estado.className = 'vacio'; 
-        return;
+let todosLosPokemons = []; // Acá guardamos los 12 para filtrar
+
+btnCargar.addEventListener('click', async () => {
+  estado.textContent = 'Cargando...';
+  contenedor.innerHTML = '';
+  buscador.value = ''; // Limpia el buscador
+  
+  try {
+    const ids = [];
+    while (ids.length < 12) {
+      const id = Math.floor(Math.random() * 898) + 1;
+      if (!ids.includes(id)) ids.push(id);
     }
-    
-    contenedor.innerHTML = listaPokemon.map(pokemon => `
-        <div class="tarjeta-pokemon">
-            <img src="${pokemon.sprites.other['official-artwork'].front_default}" alt="${pokemon.name}">
-            <h3>${pokemon.name} #${pokemon.id}</h3>
-            <div class="tipos">
-                ${pokemon.types.map(t => `<span class="tipo">${t.type.name}</span>`).join('')}
-            </div>
-        </div>
-    `).join('');
-    
-    estado.textContent = `Se cargaron ${listaPokemon.length} Pokémon`;
-    estado.className = '';
-};
 
-const obtenerPokemon = async () => {
-    estado.textContent = 'Cargando Pokémon...';
-    estado.className = '';
-    btnCargar.disabled = true;
+    const promesas = ids.map(id => 
+      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(res => res.json())
+    );
     
-    try {
-        const ids = Array.from({length: 12}, () => Math.floor(Math.random() * 151) + 1);
-        const promesas = ids.map(id => 
-            fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(res => res.json())
-        );
-        const datos = await Promise.all(promesas);
-        
-        renderizarPokemon(datos);
-        
-    } catch (error) {
-        estado.textContent = 'Error al cargar Pokémon. Revisá tu conexión.';
-        estado.className = 'error';
-        console.error(error);
-    } finally {
-        btnCargar.disabled = false;
-    }
-};
+    const resultados = await Promise.all(promesas);
+    todosLosPokemons = resultados; // Guardamos para el filtro
+    
+    renderizarPokemons(todosLosPokemons);
+    estado.textContent = `Se cargaron ${todosLosPokemons.length} Pokémon`;
+    
+  } catch (error) {
+    estado.textContent = 'Error al cargar. Intentá de nuevo.';
+    console.error(error);
+  }
+});
 
-// ESTA LÍNEA TE FALTABA - conecta el botón
-btnCargar.addEventListener('click', obtenerPokemon);
+// ESTA ES LA PARTE DEL BUSCADOR QUE TE FALTA
+buscador.addEventListener('input', () => {
+  const texto = buscador.value.toLowerCase();
+  
+  if (todosLosPokemons.length === 0) return; // Si no hay pokémon, no hace nada
+  
+  const filtrados = todosLosPokemons.filter(pokemon => 
+    pokemon.name.toLowerCase().includes(texto)
+  );
+  
+  renderizarPokemons(filtrados);
+  
+  if (filtrados.length === 0 && texto.length > 0) {
+    contenedor.innerHTML = '<p>No se encontraron resultados</p>';
+  }
+});
 
-console.log("JS cargado correctamente");
+function renderizarPokemons(lista) {
+  contenedor.innerHTML = lista.map(pokemon => `
+    <div class="pokemon-card">
+      <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+      <h3>${pokemon.name}</h3>
+      <p>#${pokemon.id}</p>
+    </div>
+  `).join('');
+}
