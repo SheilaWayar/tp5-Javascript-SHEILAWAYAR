@@ -2,12 +2,23 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>TP5 JavaScript ES6+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéAPI Demo</title>
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-    <h1>Ejercicios JavaScript ES6+</h1>
-    <p>Abrir consola con F12 para ver resultados</p>
-    <script src="js/ejercicios.js"></script>
+    <div class="container">
+        <h1>PokéAPI Demo - TP5</h1>
+        
+        <div class="controles">
+            <input type="text" id="buscador" placeholder="Buscá un pokémon... mínimo 3 letras">
+            <button id="btn-cargar">Cargar 12 Pokémon Aleatorios</button>
+        </div>
+        
+        <div id="estado"></div>
+        <div id="contenedor-pokemon"></div>
+    </div>
+    
+    <script src="js/api.js"></script>
 </body>
 </html>
