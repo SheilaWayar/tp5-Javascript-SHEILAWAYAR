@@ -32,4 +32,4 @@ console.log("a) Promedio:", calcularPromedio(notas));
 console.log("b) Aprobados:", filtrarAprobados(alumnos));
 console.log("c) Formateados:", formatearAlumnos(alumnos));
 console.log("d) Buscar Sheila:", buscarAlumno(alumnos, "Sheila"));
-console.log("d) Buscar Pedro:", buscarAlumno(alumnos, "Pedro"));
+console.log("d) Buscar Antonela:", buscarAlumno(alumnos, "Antonela"));
