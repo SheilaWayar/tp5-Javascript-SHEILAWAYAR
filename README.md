@@ -46,3 +46,5 @@ git clone https://github.com/SheilaWayar/tp5-Javascript-SHEILAWAYAR.git
 
 **4. Estado vacío**  
 ![Sin resultados](docs/05-estadovacio.png)
+
+![consola mostrando resultados de ejercicios.js] (img/Console.log.png)
